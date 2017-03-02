@@ -19,12 +19,14 @@ public class AnalizadorAccesosAlServidor
      */
     public AnalizadorAccesosAlServidor()
     {
-        accesos = new ArrayList<Acceso>();
-        enteros = new ArrayList<Integer>();
+        accesos = new ArrayList<>();
+        enteros = new ArrayList<>();
         horaConMasAccesos = -1;
     }
 
     public void analizarArchivoDeLog(String nombre){
+        accesos.clear();
+        enteros.clear();
         try{
             File archivo = new File(nombre);
             Scanner sc = new Scanner(archivo);
@@ -34,8 +36,9 @@ public class AnalizadorAccesosAlServidor
                 contador++;
             }
             while(sc.hasNextLine()){
-                System.out.println(sc.nextLine());
-                String[] cadenaAPartir = sc.nextLine().split(" ");
+                String lineaLeida = sc.nextLine();
+                System.out.println(lineaLeida);
+                String[] cadenaAPartir = lineaLeida.split(" ");
                 int año = Integer.parseInt(cadenaAPartir[0]);
                 int mes = Integer.parseInt(cadenaAPartir[1]);
                 int dia =Integer.parseInt(cadenaAPartir[2]);
@@ -55,14 +58,12 @@ public class AnalizadorAccesosAlServidor
      * 
      */
     public int obtenerHoraMasAccesos(){
-		int posicionMaxima = -1;
-		horaConMasAccesos = -1;
+        int posicionMaxima = -1;
+        horaConMasAccesos = -1;
         for(int contador = 0;contador < enteros.size();contador++){
             if(enteros.get(contador) > horaConMasAccesos){
                 horaConMasAccesos = enteros.get(contador);
-				posicionMaxima = contador;
-            }
-            else{
+                posicionMaxima = contador;
             }
         }
         return posicionMaxima;
